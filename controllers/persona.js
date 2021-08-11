@@ -1,4 +1,8 @@
 import Persona from "../models/persona.js";
+import subirArchivo from '../db-helpers/subirArchivo.js';
+import path from 'path';
+import url from 'url';
+import * as fs from 'fs'
 
 const persona = {
   personaGet: async (req, res) => {
@@ -32,6 +36,27 @@ const persona = {
     res.json({
       persona,
     });
+  },
+
+  personaCargarArchivo: async(req,res)=>{
+    const {id}=req.params
+    try {
+      const nombre=await subirArchivo(req.files,undefined)
+      let persona=await Persona.findById(id);
+      if(persona.foto){
+        const __dirname=path.dirname(url.fileURLToPath(import.meta.url));
+        const pathImage=path.join(__dirname,'uploads/', persona.foto)
+        if(fs.existsSync(pathImage)){
+          fs.unlinkSync(pathImage)
+        }
+      }
+      persona=await Persona.findByIdAndUpdate(id,{foto:nombre,})
+
+      res.json({nombre})
+
+    } catch (error) {
+      res.status(400).json({error})
+    }
   },
 
   personaPut: async (req, res) => {

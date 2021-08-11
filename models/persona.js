@@ -6,7 +6,7 @@ const personaSchema = new mongoose.Schema({
     tipoDocumento: {type: String, required: true, maxlength: 50},
     numDocumento: {type:Number, required: true, maxlength: 10},
     direccion: {type: String, Number, requiered: true},
-    telefono: {tipe: Number, required: false},
+    telefono: {type: Number, required: false},
     email: {
         type: String,
         unique: true,
@@ -15,6 +15,7 @@ const personaSchema = new mongoose.Schema({
         //gender: { type: Number, maxlength: 1 },
     },
     estado: { type: Number, default: 1 }, //estado:1 activo estado:0 como inactivo
+    foto: {type:String},
     createdAt: { type: Date, default: Date.now },
 })
 

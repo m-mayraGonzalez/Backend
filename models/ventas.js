@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const ventasSchema = new mongoose.Schema({
-  usuario: { type: mongoose.Schema.Types.ObjectId, ref: "usuario", required: true },
+  usuario: { type: mongoose.Schema.ObjectId, ref: "usuario", required: true },
   persona: {
     type: mongoose.Schema.ObjectId,
     ref: "persona",

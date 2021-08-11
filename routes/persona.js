@@ -1,9 +1,10 @@
 import  Router from "express"
 import persona from "../controllers/persona.js";
-import { existePersonaById, existePersonaByNombre } from "../db-helpers/persona.js"
+import {existePersonaById, existePersonaByNombre } from "../db-helpers/persona.js"
 import { validarCampos } from "../middlewares/validar-campos.js";
 import { validarJWT } from "../middlewares/validar-jwt.js";
 import validator from 'express-validator';
+import validarArchivoSubir from "../middlewares/validarArchivoSubir.js";
 const {check} = validator
 
 const router = Router();
@@ -26,6 +27,14 @@ router.post("/",[
     check('nombre').custom(existePersonaByNombre),
     validarCampos
 ],persona.personaPost);
+
+router.post('/uploads/:id',[
+    validarJWT,
+    check('id', 'No es un ID válido').isMongoId(),
+    check('id').custom(existePersonaById),
+    validarArchivoSubir,
+    validarCampos
+], persona.personaCargarArchivo);
 
 router.put("/:id",[
     validarJWT,

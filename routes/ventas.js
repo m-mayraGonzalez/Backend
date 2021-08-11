@@ -22,6 +22,8 @@ router.get("/:id",[
 
 router.post("/",[
     validarJWT,
+    check('usuario', 'No es un ID válido').isMongoId(),
+    check('persona', 'No es un ID válido').isMongoId(),
     //check('nombre', 'El nombre es obligatorio').not().isEmpty(),
     validarCampos
 ],ventas.agregar);
